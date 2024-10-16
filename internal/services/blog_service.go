@@ -20,3 +20,7 @@ type blogService struct {
 func NewBlogRepository(repo repository.BlogRepository) BlogService {
 	return &blogService{repo}
 }
+
+func (s *blogService) CreatePost(blog *models.Blog) error {
+	return s.repo.Create(blog)
+}
