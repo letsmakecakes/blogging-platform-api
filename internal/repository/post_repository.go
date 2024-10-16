@@ -44,3 +44,37 @@ func (r *blogRepository) GetByID(id int) (*models.Blog, error) {
 	blog.Tags = strings.Split(tags, ",")
 	return &blog, nil
 }
+
+func (r *blogRepository) GetAll(term string) ([]*models.Blog, error) {
+	var blogs []*models.Blog
+	var rows *sql.Rows
+	var err error
+
+	if term != "" {
+		likeTerm := "%" + term + "%"
+		query := `SELECT id, title, content, category, tags, created_at, updated_at
+					From posts
+					WHERE title ILIKE $1 OR content ILIKE $1 OR category ILIKE $1`
+		rows, err = r.db.Query(query, likeTerm)
+	} else {
+		query := `SELECT id, title, content, category, tags, created_at, updated_at FROM posts`
+		rows, err = r.db.Query(query)
+	}
+
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var blog models.Blog
+		var tags string
+		if err := rows.Scan(&blog.ID, &blog.Title, &blog.Content, &blog.Category, &tags, &blog.CreatedAt, &blog.UpdatedAt); err != nil {
+			return nil, err
+		}
+		blog.Tags = strings.Split(tags, ",")
+		blogs = append(blogs, &blog)
+	}
+
+	return blogs, nil
+}
