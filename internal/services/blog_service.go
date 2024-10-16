@@ -32,3 +32,7 @@ func (s *blogService) GetBlogByID(id int) (*models.Blog, error) {
 func (s *blogService) GetAllBlogs(term string) ([]*models.Blog, error) {
 	return s.repo.GetAll(term)
 }
+
+func (s *blogService) UpdateBlog(blog *models.Blog) error {
+	return s.repo.Update(blog)
+}
