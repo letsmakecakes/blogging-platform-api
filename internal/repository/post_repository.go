@@ -86,3 +86,26 @@ func (r *blogRepository) Update(blog *models.Blog) error {
 	err := r.db.QueryRow(query, blog.Title, blog.Content, blog.Category, tags, blog.ID).Scan(&blog.UpdatedAt)
 	return err
 }
+
+func (r *blogRepository) Delete(id int) error {
+	query := `DELETE FROM blogs WHERE id = $1`
+	res, err := r.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return sql.ErrNoRows
+	}
+
+	return nil
+}
