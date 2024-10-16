@@ -7,10 +7,10 @@ import (
 )
 
 type BlogRepository interface {
-	Create(post *models.Blog) error
+	Create(blog *models.Blog) error
 	GetByID(id int) (*models.Blog, error)
 	GetAll(term string) ([]*models.Blog, error)
-	Update(post *models.Blog) error
+	Update(blog *models.Blog) error
 	Delete(id int) error
 }
 
@@ -109,3 +109,4 @@ func (r *blogRepository) Delete(id int) error {
 
 	return nil
 }
+
