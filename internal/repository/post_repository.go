@@ -78,3 +78,11 @@ func (r *blogRepository) GetAll(term string) ([]*models.Blog, error) {
 
 	return blogs, nil
 }
+
+func (r *blogRepository) Update(blog *models.Blog) error {
+	query := `UPDATE posts SET title = $1, content = $2, category = $3, tags = $4, updated_at = NOW()
+				WHERE id = $5 RETURNING updated_at`
+	tags := strings.Join(blog.Tags, ",")
+	err := r.db.QueryRow(query, blog.Title, blog.Content, blog.Category, tags, blog.ID).Scan(&blog.UpdatedAt)
+	return err
+}
