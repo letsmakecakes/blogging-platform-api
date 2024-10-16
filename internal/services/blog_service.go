@@ -10,9 +10,13 @@ type BlogService interface {
 	GetBlogByID(id int) (*models.Blog, error)
 	GetAllBlogs(term string) ([]*models.Blog, error)
 	UpdateBlog(blog *models.Blog) error
-	DeleteBlog(id int) error 
+	DeleteBlog(id int) error
 }
 
 type blogService struct {
 	repo repository.BlogRepository
+}
+
+func NewBlogRepository(repo repository.BlogRepository) BlogService {
+	return &blogService{repo}
 }
