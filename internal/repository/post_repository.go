@@ -1,6 +1,9 @@
 package repository
 
-import "bloggingplatformapi/internal/models"
+import (
+	"bloggingplatformapi/internal/models"
+	"database/sql"
+)
 
 type BlogRepository interface {
 	Create(post *models.Blog) error
@@ -8,4 +11,8 @@ type BlogRepository interface {
 	GetAll(term string) ([]*models.Blog, error)
 	Update(post *models.Blog) error
 	Delete(id int) error 
+}
+
+type blogRepository struct {
+	db *sql.DB
 }
