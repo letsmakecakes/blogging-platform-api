@@ -36,3 +36,7 @@ func (s *blogService) GetAllBlogs(term string) ([]*models.Blog, error) {
 func (s *blogService) UpdateBlog(blog *models.Blog) error {
 	return s.repo.Update(blog)
 }
+
+func (s *blogService) DeleteBlog(id int) error {
+	return s.repo.Delete(id)
+}
