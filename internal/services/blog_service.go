@@ -28,3 +28,7 @@ func (s *blogService) CreateBlog(blog *models.Blog) error {
 func (s *blogService) GetBlogByID(id int) (*models.Blog, error) {
 	return s.repo.GetByID(id)
 }
+
+func (s *blogService) GetAllBlogs(term string) ([]*models.Blog, error) {
+	return s.repo.GetAll(term)
+}
