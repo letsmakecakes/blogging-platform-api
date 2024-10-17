@@ -17,7 +17,7 @@ type blogService struct {
 	repo repository.BlogRepository
 }
 
-func NewBlogRepository(repo repository.BlogRepository) BlogService {
+func NewBlogService(repo repository.BlogRepository) BlogService {
 	return &blogService{repo}
 }
 
