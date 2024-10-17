@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func ValidatePost(blog *models.Blog) error {
+func ValidateBlog(blog *models.Blog) error {
 	if strings.TrimSpace(blog.Title) == "" {
 		return errors.New("Title is required")
 	}
