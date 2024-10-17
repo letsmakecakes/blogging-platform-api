@@ -4,7 +4,9 @@ import (
 	"bloggingplatformapi/internal/models"
 	"bloggingplatformapi/internal/services"
 	"bloggingplatformapi/internal/utils"
+	"database/sql"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,3 +40,26 @@ func (c *BlogController) CreateBlog(ctx *gin.Context) {
 
 	utils.RespondWithJSON(ctx, http.StatusCreated, blog)
 }
+
+// GetPost handles GET /posts/:id
+func (c *BlogController) GetBlog(ctx *gin.Context) {
+	idParam := ctx.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		utils.RespondWithError(ctx, http.StatusBadRequest, "Invalid post ID")
+		return
+	}
+
+	blog, err := c.Service.GetBlogByID(id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			utils.RespondWithError(ctx, http.StatusNotFound, "Blog not found")
+		} else {
+			utils.RespondWithError(ctx, http.StatusInternalServerError, "Failed to retrieve blog")
+		}
+		return
+	}
+
+	utils.RespondWithJSON(ctx, http.StatusOK, blog)
+}
+
