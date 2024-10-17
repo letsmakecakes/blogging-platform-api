@@ -63,6 +63,18 @@ func (c *BlogController) GetBlog(ctx *gin.Context) {
 	utils.RespondWithJSON(ctx, http.StatusOK, blog)
 }
 
+// GetAllPosts handles GET /blogs
+func (c *BlogController) GetAllBlogs(ctx *gin.Context) {
+	term := ctx.Query("term")
+	blogs, err := c.Service.GetAllBlogs(term)
+	if err != nil {
+		utils.RespondWithError(ctx, http.StatusInternalServerError, "Failed to retrieve blogs")
+		return
+	}
+
+	utils.RespondWithJSON(ctx, http.StatusOK, blogs)
+}
+
 // UpdatePost handles PUT /blogs/:id
 func (c *BlogController) UpdateBlog(ctx *gin.Context) {
 	idParam := ctx.Param("id")
