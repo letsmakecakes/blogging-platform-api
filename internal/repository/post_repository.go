@@ -36,7 +36,7 @@ func (r *blogRepository) GetByID(id int) (*models.Blog, error) {
 
 	var blog models.Blog
 	var tags string
-	err := row.Scan(&blog.ID, &blog.Title, &blog.Category, &tags, &blog.CreatedAt, &blog.UpdatedAt)
+	err := row.Scan(&blog.ID, &blog.Title, &blog.Content, &blog.Category, &tags, &blog.CreatedAt, &blog.UpdatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -109,4 +109,3 @@ func (r *blogRepository) Delete(id int) error {
 
 	return nil
 }
-
