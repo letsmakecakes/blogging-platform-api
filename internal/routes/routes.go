@@ -18,7 +18,7 @@ func SetupRoutes(router *gin.Engine, db *sql.DB) {
 	// Group routes under /api for versioning or future scalability
 	api := router.Group("/api")
 	{
-		blogs := api.Group("/posts")
+		blogs := api.Group("/blogs")
 		{
 			blogs.POST("/", blogController.CreateBlog)
 			blogs.GET("/", blogController.GetAllBlogs)
