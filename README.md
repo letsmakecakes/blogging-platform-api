@@ -36,15 +36,15 @@ blogging-platform-api/
 │   ├── config/
 │   │   └── config.go       # Configuration loader
 │   ├── controllers/
-│   │   └── post_controller.go # API Handlers for blog posts
+│   │   └── blog_controller.go # API Handlers for blog posts
 │   ├── models/
-│   │   └── post.go         # Blog post model
+│   │   └── blog.go         # Blog post model
 │   ├── repository/
-│   │   └── post_repository.go # Database operations for blog posts
+│   │   └── blog_repository.go # Database operations for blog posts
 │   ├── routes/
 │   │   └── routes.go       # Route definitions
 │   ├── services/
-│   │   └── post_service.go # Business logic for blog posts
+│   │   └── blog_service.go # Business logic for blog posts
 │   └── utils/
 │       ├── response.go     # Utility functions for API responses
 │       └── validation.go   # Validation utilities
@@ -52,7 +52,7 @@ blogging-platform-api/
 │   └── db/
 │       └── db.go           # Database connection and initialization
 ├── migrations/
-│   └── 001_create_posts_table.sql # SQL migration for posts table
+│   └── 001_create_blogs_table.sql # SQL migration for blogs table
 ├── .env                     # Environment variables
 ├── .gitignore                # Git ignore file
 ├── go.mod                    # Go module definition
@@ -80,7 +80,7 @@ blogging-platform-api/
 4. Run database migrations (PostgreSQL) to create the necessary tables:
 
    ```bash
-   psql -h <host> -d <database> -U <user> -f migrations/001_create_posts_table.sql
+   psql -h <host> -d <database> -U <user> -f migrations/001_create_blogs_table.sql
    ```
 
 ## Environment Variables
@@ -110,11 +110,11 @@ The API will be accessible at `http://localhost:8080`.
 
 ### Blog Posts
 
-- **GET** `/posts`: Fetch all blog posts. Supports filtering via query parameters (e.g., `term`).
-- **GET** `/posts/:id`: Fetch a single blog post by ID.
-- **POST** `/posts`: Create a new blog post. Requires JSON payload.
-- **PUT** `/posts/:id`: Update an existing blog post by ID.
-- **DELETE** `/posts/:id`: Delete a blog post by ID.
+- **GET** `/blogs/`: Fetch all blog posts. Supports filtering via query parameters (e.g., `term`).
+- **GET** `/blogs/:id`: Fetch a single blog post by ID.
+- **POST** `/blogs`: Create a new blog post. Requires JSON payload.
+- **PUT** `/blogs/:id`: Update an existing blog post by ID.
+- **DELETE** `/blogs/:id`: Delete a blog post by ID.
 
 #### Example Request and Response
 
@@ -123,7 +123,7 @@ The API will be accessible at `http://localhost:8080`.
 **Request:**
 
 ```bash
-POST /posts
+POST /blogs
 Content-Type: application/json
 ```
 
@@ -155,7 +155,7 @@ Content-Type: application/json
 **Request:**
 
 ```bash
-GET /posts?term=Tech
+GET /blogs?term=Tech
 ```
 
 **Response:**
