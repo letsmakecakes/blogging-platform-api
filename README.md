@@ -80,7 +80,7 @@ blogging-platform-api/
 4. Run database migrations (PostgreSQL) to create the necessary tables:
 
    ```bash
-   psql -h <host> -d <database> -U <user> -f migrations/001_create_posts_table.sql
+   psql -h <host> -d <database> -U <user> -f migrations/001_create_blogs_table.sql
    ```
 
 ## Environment Variables
