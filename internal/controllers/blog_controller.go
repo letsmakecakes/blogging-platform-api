@@ -20,7 +20,7 @@ func NewBlogController(service services.BlogService) *BlogController {
 	return &BlogController{service}
 }
 
-// CreatePost handles POST /blogs
+// CreateBlog handles POST /blogs
 func (c *BlogController) CreateBlog(ctx *gin.Context) {
 	var blog models.Blog
 	if err := ctx.ShouldBindJSON(&blog); err != nil {
@@ -29,7 +29,7 @@ func (c *BlogController) CreateBlog(ctx *gin.Context) {
 		return
 	}
 
-	// Validate the post
+	// Validate the blog
 	if err := utils.ValidateBlog(&blog); err != nil {
 		log.Errorf("error validating blog: %v", err)
 		utils.RespondWithError(ctx, http.StatusBadRequest, err.Error())
@@ -45,7 +45,7 @@ func (c *BlogController) CreateBlog(ctx *gin.Context) {
 	utils.RespondWithJSON(ctx, http.StatusCreated, blog)
 }
 
-// GetPost handles GET /blogs/:id
+// GetBlog handles GET /blogs/:id
 func (c *BlogController) GetBlog(ctx *gin.Context) {
 	idParam := ctx.Param("id")
 	id, err := strconv.Atoi(idParam)
@@ -69,7 +69,7 @@ func (c *BlogController) GetBlog(ctx *gin.Context) {
 	utils.RespondWithJSON(ctx, http.StatusOK, blog)
 }
 
-// GetAllPosts handles GET /blogs
+// GetAllBlogs handles GET /blogs
 func (c *BlogController) GetAllBlogs(ctx *gin.Context) {
 	term := ctx.Query("term")
 	blogs, err := c.Service.GetAllBlogs(term)
@@ -82,7 +82,7 @@ func (c *BlogController) GetAllBlogs(ctx *gin.Context) {
 	utils.RespondWithJSON(ctx, http.StatusOK, blogs)
 }
 
-// UpdatePost handles PUT /blogs/:id
+// UpdateBlog handles PUT /blogs/:id
 func (c *BlogController) UpdateBlog(ctx *gin.Context) {
 	idParam := ctx.Param("id")
 	id, err := strconv.Atoi(idParam)
@@ -127,7 +127,7 @@ func (c *BlogController) UpdateBlog(ctx *gin.Context) {
 	utils.RespondWithJSON(ctx, http.StatusOK, updatedBlog)
 }
 
-// DeletePost handles DELETE /posts/:id
+// DeleteBlog handles DELETE /blogs/:id
 func (c *BlogController) DeleteBlog(ctx *gin.Context) {
 	idParam := ctx.Param("id")
 	id, err := strconv.Atoi(idParam)

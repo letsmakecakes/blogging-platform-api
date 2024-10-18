@@ -18,13 +18,13 @@ func SetupRoutes(router *gin.Engine, db *sql.DB) {
 	// Group routes under /api for versioning or future scalability
 	api := router.Group("/api")
 	{
-		posts := api.Group("/blogs") // Renamed to 'posts'
+		blogs := api.Group("/blogs")
 		{
-			posts.POST("/", blogController.CreateBlog)      // Create a new post
-			posts.GET("/", blogController.GetAllBlogs)      // Get all posts
-			posts.GET("/:id", blogController.GetBlog)       // Get a post by ID
-			posts.PUT("/:id", blogController.UpdateBlog)    // Update a post by ID
-			posts.DELETE("/:id", blogController.DeleteBlog) // Delete a post by ID
+			blogs.POST("/", blogController.CreateBlog)      // Create a new blog
+			blogs.GET("/", blogController.GetAllBlogs)      // Get all blogs
+			blogs.GET("/:id", blogController.GetBlog)       // Get a blog by ID
+			blogs.PUT("/:id", blogController.UpdateBlog)    // Update a blog by ID
+			blogs.DELETE("/:id", blogController.DeleteBlog) // Delete a blog by ID
 		}
 	}
 }

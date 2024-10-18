@@ -23,7 +23,7 @@ func NewBlogRepository(db *sql.DB) BlogRepository {
 }
 
 func (r *blogRepository) Create(blog *models.Blog) error {
-	query := `INSERT INTO posts (title, content, category, tags, created_at, updated_at)
+	query := `INSERT INTO blogs (title, content, category, tags, created_at, updated_at)
 				VALUES ($1, $2, $3, $4, NOW(), NOW()) RETURNING id, created_at, updated_at`
 	tags := strings.Join(blog.Tags, ",")
 	err := r.db.QueryRow(query, blog.Title, blog.Content, blog.Category, tags).Scan(&blog.ID, &blog.CreatedAt, &blog.UpdatedAt)
@@ -31,7 +31,7 @@ func (r *blogRepository) Create(blog *models.Blog) error {
 }
 
 func (r *blogRepository) GetByID(id int) (*models.Blog, error) {
-	query := `SELECT id, title, content, category, tags, created_at, updated_at FROM posts WHERE id = $1`
+	query := `SELECT id, title, content, category, tags, created_at, updated_at FROM blogs WHERE id = $1`
 	row := r.db.QueryRow(query, id)
 
 	var blog models.Blog
@@ -53,11 +53,11 @@ func (r *blogRepository) GetAll(term string) ([]*models.Blog, error) {
 	if term != "" {
 		likeTerm := "%" + term + "%"
 		query := `SELECT id, title, content, category, tags, created_at, updated_at
-					From posts
+					From blogs
 					WHERE title ILIKE $1 OR content ILIKE $1 OR category ILIKE $1`
 		rows, err = r.db.Query(query, likeTerm)
 	} else {
-		query := `SELECT id, title, content, category, tags, created_at, updated_at FROM posts`
+		query := `SELECT id, title, content, category, tags, created_at, updated_at FROM blogs`
 		rows, err = r.db.Query(query)
 	}
 
@@ -80,7 +80,7 @@ func (r *blogRepository) GetAll(term string) ([]*models.Blog, error) {
 }
 
 func (r *blogRepository) Update(blog *models.Blog) error {
-	query := `UPDATE posts SET title = $1, content = $2, category = $3, tags = $4, updated_at = NOW()
+	query := `UPDATE blogs SET title = $1, content = $2, category = $3, tags = $4, updated_at = NOW()
 				WHERE id = $5 RETURNING updated_at`
 	tags := strings.Join(blog.Tags, ",")
 	err := r.db.QueryRow(query, blog.Title, blog.Content, blog.Category, tags, blog.ID).Scan(&blog.UpdatedAt)
@@ -88,7 +88,7 @@ func (r *blogRepository) Update(blog *models.Blog) error {
 }
 
 func (r *blogRepository) Delete(id int) error {
-	query := `DELETE FROM posts WHERE id = $1`
+	query := `DELETE FROM blogs WHERE id = $1`
 	res, err := r.db.Exec(query, id)
 	if err != nil {
 		return err
