@@ -88,7 +88,7 @@ func (r *blogRepository) Update(blog *models.Blog) error {
 }
 
 func (r *blogRepository) Delete(id int) error {
-	query := `DELETE FROM blogs WHERE id = $1`
+	query := `DELETE FROM posts WHERE id = $1`
 	res, err := r.db.Exec(query, id)
 	if err != nil {
 		return err
