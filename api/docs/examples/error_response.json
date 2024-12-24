@@ -1,0 +1,8 @@
+{
+  "status": "error",
+  "message": "Invalid request payload",
+  "details": {
+    "field": "title",
+    "error": "Title is required"
+  }
+}
