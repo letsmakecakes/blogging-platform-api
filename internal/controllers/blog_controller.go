@@ -5,6 +5,7 @@ import (
 	"bloggingplatformapi/internal/services"
 	"bloggingplatformapi/internal/utils"
 	"database/sql"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -58,7 +59,7 @@ func (c *BlogController) GetBlog(ctx *gin.Context) {
 	blog, err := c.Service.GetBlogByID(id)
 	if err != nil {
 		log.Errorf("error getting blog: %v", err)
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			utils.RespondWithError(ctx, http.StatusNotFound, "Blog not found")
 		} else {
 			utils.RespondWithError(ctx, http.StatusInternalServerError, "Failed to retrieve blog")
@@ -109,7 +110,7 @@ func (c *BlogController) UpdateBlog(ctx *gin.Context) {
 	blog.ID = id
 	if err := c.Service.UpdateBlog(&blog); err != nil {
 		log.Errorf("error updating blogs: %v", err)
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			utils.RespondWithError(ctx, http.StatusNotFound, "Blog not found")
 		} else {
 			utils.RespondWithError(ctx, http.StatusInternalServerError, "Failed to update post")
@@ -139,7 +140,7 @@ func (c *BlogController) DeleteBlog(ctx *gin.Context) {
 
 	if err := c.Service.DeleteBlog(id); err != nil {
 		log.Errorf("error deleting blog: %v", err)
-		if err == sql.ErrNoRows {
+		if errors.Is(err, sql.ErrNoRows) {
 			utils.RespondWithError(ctx, http.StatusNotFound, "Blog not found")
 		} else {
 			utils.RespondWithError(ctx, http.StatusInternalServerError, "Failed to delete blog")
