@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "title": "How to Build a REST API in Go",
+  "content": "This blog covers the basics of building a REST API using the Gin framework...",
+  "category": "Technology",
+  "tags": "Go, REST API, Gin Framework",
+  "created_at": "2024-12-01T10:00:00Z",
+  "updated_at": "2024-12-01T12:00:00Z"
+}
