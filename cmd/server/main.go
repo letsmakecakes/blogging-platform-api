@@ -5,7 +5,11 @@ import (
 	"bloggingplatformapi/internal/routes"
 	"bloggingplatformapi/internal/utils"
 	"bloggingplatformapi/pkg/db"
+	"database/sql"
+	"errors"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -31,7 +35,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not connect to the database: %v", err)
 	}
-	defer database.Close()
+	defer func(database *sql.DB) {
+		err := database.Close()
+		if err != nil {
+			log.Fatalf("Could not close database: %v", err)
+		}
+	}(database)
 
 	log.Info("Database initialized")
 
@@ -49,9 +58,19 @@ func main() {
 	// Setup routes
 	routes.SetupRoutes(router, database)
 
+	// Create custom HTTP server with timeouts
+	server := &http.Server{
+		Addr:              ":" + cfg.Port,
+		Handler:           router,
+		ReadTimeout:       5 * time.Second,
+		ReadHeaderTimeout: 5 * time.Second,
+		WriteTimeout:      5 * time.Second,
+		IdleTimeout:       5 * time.Second,
+	}
+
 	// Start server
 	log.Printf("Server running on port %s", cfg.Port)
-	if err := router.Run(":" + cfg.Port); err != nil {
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatalf("Could not start server: %v", err)
 	}
 }
