@@ -8,16 +8,16 @@ import (
 
 func ValidateBlog(blog *models.Blog) error {
 	if strings.TrimSpace(blog.Title) == "" {
-		return errors.New("Title is required")
+		return errors.New("title is required")
 	}
 	if strings.TrimSpace(blog.Content) == "" {
-		return errors.New("Content is required")
+		return errors.New("content is required")
 	}
 	if strings.TrimSpace(blog.Category) == "" {
-		return errors.New("Category is required")
+		return errors.New("category is required")
 	}
 	if len(blog.Tags) == 0 {
-		return errors.New("At least one tag is required")
+		return errors.New("at least one tag is required")
 	}
 	return nil
 }
