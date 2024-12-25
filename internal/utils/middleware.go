@@ -10,23 +10,24 @@ import (
 // GinLogrus is a middleware function that logs HTTP requests using Logrus
 func GinLogrus(logger *logrus.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Start timer
-		start := time.Now()
+		// Start timer to measure request duration
+		startTime := time.Now()
 
-		// Process request
+		// Process the request
 		c.Next()
 
-		// Stop timer
-		duration := time.Since(start)
+		// Calculate the duration of the request
+		duration := time.Since(startTime)
 
-		// Log fields
+		// Log the request details
 		logger.WithFields(logrus.Fields{
 			"status":    c.Writer.Status(),
 			"method":    c.Request.Method,
-			"path":      c.Request.Method,
+			"path":      c.Request.URL.Path,
 			"ip":        c.ClientIP(),
-			"latency":   duration,
+			"latency":   duration.Milliseconds(),
 			"userAgent": c.Request.UserAgent(),
-		}).Info("request processed")
+			"error":     c.Errors.ByType(gin.ErrorTypePrivate).String(), // Logs any internal errors
+		}).Info("HTTP request processed")
 	}
 }
