@@ -2,17 +2,32 @@
 	"info": {
 		"_postman_id": "1f3c1362-ede6-4b61-b9cf-f5723958d300",
 		"name": "Blog API",
-		"description": "Postman collection for managing blog posts.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "32638033"
+		"description": "RESTful API collection for managing blog posts with CRUD operations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32638033",
+		"version": "1.0.0"
 	},
 	"item": [
 		{
 			"name": "Retrieve All Blogs",
 			"request": {
 				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/api/v1/blogs"
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/blogs",
+					"host": ["{{baseUrl}}"],
+					"path": [
+						"api",
+						"v1",
+						"blogs"
+					]
+				},
+				"description": "Retrieves a list of all blog posts"
 			},
 			"response": []
 		},
@@ -24,13 +39,26 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"title\": \"My First Blog\",\n  \"content\": \"This is the content of my first blog.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\",\"test\"]\n}"
+					"raw": "{\n  \"title\": \"My First Blog\",\n  \"content\": \"This is the content of my first blog.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\", \"test\"]\n}"
 				},
-				"url": "http://localhost:8080/api/v1/blogs"
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/blogs",
+					"host": ["{{baseUrl}}"],
+					"path": [
+						"api",
+						"v1",
+						"blogs"
+					]
+				},
+				"description": "Creates a new blog post"
 			},
 			"response": []
 		},
@@ -38,14 +66,15 @@
 			"name": "Retrieve a Blog",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
+					"raw": "{{baseUrl}}/api/v1/blogs/:blogId",
+					"host": ["{{baseUrl}}"],
 					"path": [
 						"api",
 						"v1",
@@ -55,10 +84,12 @@
 					"variable": [
 						{
 							"key": "blogId",
-							"value": "3"
+							"value": "3",
+							"description": "The unique identifier of the blog post"
 						}
 					]
-				}
+				},
+				"description": "Retrieves a specific blog post by ID"
 			},
 			"response": []
 		},
@@ -70,19 +101,19 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"title\": \"Updated Blog Title\",\n  \"content\": \"Updated blog content.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\",\"test\"]\n}"
+					"raw": "{\n  \"title\": \"Updated Blog Title\",\n  \"content\": \"Updated blog content.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\", \"test\"]\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
+					"raw": "{{baseUrl}}/api/v1/blogs/:blogId",
+					"host": ["{{baseUrl}}"],
 					"path": [
 						"api",
 						"v1",
@@ -92,10 +123,12 @@
 					"variable": [
 						{
 							"key": "blogId",
-							"value": "3"
+							"value": "3",
+							"description": "The unique identifier of the blog post to update"
 						}
 					]
-				}
+				},
+				"description": "Updates an existing blog post"
 			},
 			"response": []
 		},
@@ -103,14 +136,15 @@
 			"name": "Delete a Blog",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
+					"raw": "{{baseUrl}}/api/v1/blogs/:blogId",
+					"host": ["{{baseUrl}}"],
 					"path": [
 						"api",
 						"v1",
@@ -120,12 +154,22 @@
 					"variable": [
 						{
 							"key": "blogId",
-							"value": "3"
+							"value": "3",
+							"description": "The unique identifier of the blog post to delete"
 						}
 					]
-				}
+				},
+				"description": "Deletes a specific blog post"
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string",
+			"description": "Base URL for the API"
 		}
 	]
 }
