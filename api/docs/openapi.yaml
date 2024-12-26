@@ -1,212 +1,147 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Blog API
-  description: API for managing blog posts.
+  description: OpenAPI collection for managing blog posts.
   version: 1.0.0
-  contact:
-    name: Adwaith Rajeev
-    email: adwaith@example.com
-
 servers:
   - url: http://localhost:8080
-    description: Local development server
-
 paths:
-  /blogs:
+  /api/blogs:
     get:
-      summary: Retrieve all blogs
-      description: Fetch all blogs or filter blogs using an optional search term.
-      parameters:
-        - name: term
-          in: query
-          description: Search term to filter blogs.
-          required: false
-          schema:
-            type: string
+      summary: Retrieve All Blogs
       responses:
         '200':
-          description: A list of blogs.
+          description: A list of blogs
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Blog'
-        '500':
-          description: Failed to retrieve blogs.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
     post:
-      summary: Create a new blog
-      description: Add a new blog post to the platform.
+      summary: Create a Blog
       requestBody:
-        description: Blog data to create.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Blog'
+              $ref: '#/components/schemas/BlogCreate'
       responses:
         '201':
-          description: Blog created successfully.
+          description: Blog created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Blog'
-        '400':
-          description: Invalid request payload.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Failed to create blog.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /blogs/{id}:
+  /api/blogs/{id}:
     get:
-      summary: Retrieve a blog
-      description: Fetch a specific blog by its ID.
+      summary: Retrieve a Blog
       parameters:
         - name: id
           in: path
-          description: Blog ID.
           required: true
+          description: The ID of the blog
           schema:
-            type: integer
+            type: string
       responses:
         '200':
-          description: Blog retrieved successfully.
+          description: Details of a blog
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Blog'
-        '400':
-          description: Invalid blog ID.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Blog not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Failed to retrieve blog.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          description: Blog not found
     put:
-      summary: Update a blog
-      description: Update an existing blog post by its ID.
+      summary: Update a Blog
       parameters:
         - name: id
           in: path
-          description: Blog ID.
           required: true
+          description: The ID of the blog
           schema:
-            type: integer
+            type: string
       requestBody:
-        description: Blog data to update.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Blog'
+              $ref: '#/components/schemas/BlogUpdate'
       responses:
         '200':
-          description: Blog updated successfully.
+          description: Blog updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Blog'
-        '400':
-          description: Invalid blog ID or request payload.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Blog not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Failed to update blog.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          description: Blog not found
     delete:
-      summary: Delete a blog
-      description: Delete a specific blog by its ID.
+      summary: Delete a Blog
       parameters:
         - name: id
           in: path
-          description: Blog ID.
           required: true
+          description: The ID of the blog
           schema:
-            type: integer
+            type: string
       responses:
         '204':
-          description: Blog deleted successfully.
-        '400':
-          description: Invalid blog ID.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+          description: Blog deleted successfully
         '404':
-          description: Blog not found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Failed to delete blog.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
+          description: Blog not found
 components:
   schemas:
     Blog:
       type: object
       properties:
         id:
-          type: integer
-          description: Blog ID.
+          type: string
+          example: "1"
         title:
           type: string
-          description: Blog title.
+          example: "My First Blog"
         content:
           type: string
-          description: Blog content.
+          example: "This is the content of my first blog."
         author:
           type: string
-          description: Blog author.
-        createdAt:
+          example: "Adwaith Rajeev"
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["blog", "test"]
+    BlogCreate:
+      type: object
+      required:
+        - title
+        - content
+        - author
+      properties:
+        title:
           type: string
-          format: date-time
-          description: Timestamp of blog creation.
-        updatedAt:
+          example: "My First Blog"
+        content:
           type: string
-          format: date-time
-          description: Timestamp of last update.
-
-    ErrorResponse:
+          example: "This is the content of my first blog."
+        author:
+          type: string
+          example: "Adwaith Rajeev"
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["blog", "test"]
+    BlogUpdate:
       type: object
       properties:
-        error:
+        title:
           type: string
-          description: Error message.
+          example: "Updated Blog Title"
+        content:
+          type: string
+          example: "Updated blog content."
+        author:
+          type: string
+          example: "Adwaith Rajeev"
