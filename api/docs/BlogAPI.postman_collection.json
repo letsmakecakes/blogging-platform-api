@@ -12,7 +12,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/api/blogs"
+				"url": "http://localhost:8080/api/v1/blogs"
 			},
 			"response": []
 		},
@@ -28,9 +28,9 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"title\": \"My First Blog\",\n  \"content\": \"This is the content of my first blog.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"tags\": [\"blog\",\"test\"]\n}"
+					"raw": "{\n  \"title\": \"My First Blog\",\n  \"content\": \"This is the content of my first blog.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\",\"test\"]\n}"
 				},
-				"url": "http://localhost:8080/api/blogs"
+				"url": "http://localhost:8080/api/v1/blogs"
 			},
 			"response": []
 		},
@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/blogs/:id",
+					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -48,13 +48,14 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"v1",
 						"blogs",
-						":id"
+						":blogId"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "blogId",
+							"value": "3"
 						}
 					]
 				}
@@ -73,10 +74,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"title\": \"Updated Blog Title\",\n  \"content\": \"Updated blog content.\",\n  \"author\": \"Adwaith Rajeev\"\n}"
+					"raw": "{\n  \"title\": \"Updated Blog Title\",\n  \"content\": \"Updated blog content.\",\n  \"author\": \"Adwaith Rajeev\",\n  \"category\": \"blog test\",\n  \"tags\": [\"blog\",\"test\"]\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/blogs/:id",
+					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -84,13 +85,14 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"v1",
 						"blogs",
-						":id"
+						":blogId"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "blogId",
+							"value": "3"
 						}
 					]
 				}
@@ -103,7 +105,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/blogs/:id",
+					"raw": "http://localhost:8080/api/v1/blogs/:blogId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -111,13 +113,14 @@
 					"port": "8080",
 					"path": [
 						"api",
+						"v1",
 						"blogs",
-						":id"
+						":blogId"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "blogId",
+							"value": "3"
 						}
 					]
 				}
