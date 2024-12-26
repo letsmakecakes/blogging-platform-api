@@ -51,7 +51,7 @@ func (c *BlogController) CreateBlog(ctx *gin.Context) {
 // GetBlog retrieves a specific key by its ID via GET /blogs/:id.
 // It validates the ID parameter and fetches the blog from the service layer.
 func (c *BlogController) GetBlog(ctx *gin.Context) {
-	id, err := parseID(ctx.Param("id"))
+	id, err := parseID(ctx.Param("blogId"))
 	if err != nil {
 		logAndRespond(ctx, http.StatusBadRequest, "Invalid blog ID", err)
 		return
@@ -83,7 +83,7 @@ func (c *BlogController) GetAllBlogs(ctx *gin.Context) {
 // UpdateBlog updates an existing blog post by its ID via PUT /blogs/:id.
 // It validates the ID parameter, incoming payload, and performs the update through the service layer.
 func (c *BlogController) UpdateBlog(ctx *gin.Context) {
-	id, err := parseID(ctx.Param("id"))
+	id, err := parseID(ctx.Param("blogId"))
 	if err != nil {
 		logAndRespond(ctx, http.StatusBadRequest, "Invalid blog ID", err)
 		return
@@ -121,7 +121,7 @@ func (c *BlogController) UpdateBlog(ctx *gin.Context) {
 
 // DeleteBlog handles DELETE /blogs/:id
 func (c *BlogController) DeleteBlog(ctx *gin.Context) {
-	id, err := parseID(ctx.Param("id"))
+	id, err := parseID(ctx.Param("blogId"))
 	if err != nil {
 		logAndRespond(ctx, http.StatusBadRequest, "Invalid blog ID", err)
 		return
